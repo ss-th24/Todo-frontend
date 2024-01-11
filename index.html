@@ -1,0 +1,85 @@
+ <!-- creating frontend of todo app with html and vanilla js -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>
+        Todo App
+    </title>
+    <style>
+        table, th, td {
+          border:1px solid black;
+        }
+        .done0{
+            background-color: white;
+        }
+        .done1{
+            background-color: lightgreen;
+        }
+    </style>
+</head>
+<body>
+    
+    <h1>Your ToDo App</h1>
+
+    <div id="inputs">
+        <input type="text" id="title">
+        <input type="text" id="description">
+        <button onclick="addtodo()">Add Todo</button>
+    </div>
+
+    <br>
+
+    <div>
+        <table id="todos" style="width: 100%;">
+            <tr>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Mark Done</th>
+                <th>Delete</th>
+            </tr>
+        </table>
+    </div>
+</body>
+
+<script>
+
+    let todoCount = 1;
+    const addtodo = () => {
+        let title = document.getElementById('title').value;
+
+        let descripton = document.getElementById('description').value;
+        if(!title.length){
+            window.alert('Enter a todo!');
+        }
+
+
+        let todo = document.createElement('tr');
+        todo.innerHTML = `<td>${title}</td><td>${descripton}</td><td><button id="${todoCount}#done" onclick="doneTodo(this.id)">✅</button></td><td><button id="${todoCount}#delete" onclick="deleteTodo(this.id)">🗑️</button></td>`;
+        todo.id = `${todoCount}#todo`;
+        todo.className = 'done0';
+        todoCount++;
+
+        document.getElementById('todos').childNodes[1].appendChild(todo);
+        document.getElementById('title').value = '';
+        document.getElementById('description').value = '';
+    };
+
+    const deleteTodo = (id) =>{
+        id = id.replace('#delete', '');
+        console.log(id);
+        let todoID = `${id}#todo`;
+        let element = document.getElementById(todoID);
+        element.remove();
+    };
+
+    const doneTodo = (id) =>{
+        id = id.replace('#done', '');
+        let todoID = `${id}#todo`;
+
+        let className = document.getElementById(todoID).className;
+        
+        className == 'done0' ?  document.getElementById(todoID).className = 'done1': document.getElementById(todoID).className = 'done0';
+    }
+</script>
+</html>
+
